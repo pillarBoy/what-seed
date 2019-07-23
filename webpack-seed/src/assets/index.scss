@@ -1,0 +1,15 @@
+/*
+ * !!!请不要使用 * {margin:0;}这种通配符，low,而且还很消耗浏览器性能。html元素那么多，全部重置一遍，是需要消耗大量性能的
+*/
+html, body, p, h1,h2,h3,h4,h5,h6,ul,li,dl,dt,dd {
+  margin: 0;
+  padding: 0;
+}
+li,dt,dd {
+  list-style: none;
+}
+div {
+  width: 100px;
+  height: 100px;
+  background: red;
+}
