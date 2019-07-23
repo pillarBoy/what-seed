@@ -6,10 +6,7 @@ var CleanWebpackPlugin = require('clean-webpack-plugin')
 var UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 var htmlTemplate = require('./html-templete-plugin')
-var scssLoaderBaseRule = require('./scss-loder-base-rule')
 var config = require('./config')
-
-scssLoaderBaseRule.use.unshift(MiniCssExtractPlugin.loader)
 
 var webpackModule = {
   mode: 'production',
