@@ -44,7 +44,7 @@ module.exports = {
     },
     open: config.open,
     host: '0.0.0.0',
-    port: 5000, // open: 'Google Chrome',
+    port: 5001, // open: 'Google Chrome',
     proxy,
   }
 }

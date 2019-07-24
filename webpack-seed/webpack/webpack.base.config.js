@@ -22,7 +22,8 @@ const webpackBase = {
   },
   resolve: {
     alias: {
-      '@': path.resolve('src')
+      '@': path.resolve('src'),
+      '%': path.resolve(__dirname, '../../common-utils')
     },
     extensions: [".ts", ".tsx", ".js"]
   },
