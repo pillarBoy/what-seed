@@ -1,0 +1,21 @@
+{
+  "name": "web-cli",
+  "version": "0.0.2",
+  "main": "index.js",
+  "license": "MIT",
+  "description": "",
+  "bin": {
+    "web-cli": "./src/web-cli.js"
+  },
+  "author": "大柱子 白天雪",
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.20.0",
+    "fs-extra": "^8.1.0",
+    "git-down-repo": "^2.4.3",
+    "shelljs": "^0.8.3",
+    "through2": "^3.0.1",
+    "vinyl-fs": "^3.0.3",
+    "which": "^1.3.1"
+  }
+}

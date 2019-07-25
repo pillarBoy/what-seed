@@ -4,12 +4,12 @@ var config = require('./config')
 if (config.isMobile) {
   if (typeof config.entry === 'string') {
     config.entry = {
-      setRem: path.resolve(__dirname, '../../common-utils/htmlFontSize.js'),
+      setRem: path.resolve(__dirname, '../src/utils/htmlFontSize.js'),
       index: this.entry
     }
   }
   if (Object.prototype.toString.call(config.entry) === '[object Object]') {
-    config.entry = Object.assign({ setRem: path.resolve(__dirname, '../../common-utils/htmlFontSize.js') }, config.entry);
+    config.entry = Object.assign({ setRem: path.resolve(__dirname, '../src/utils/htmlFontSize.js') }, config.entry);
   }
 }
 
@@ -18,7 +18,6 @@ const webpackBase = {
   output: config.output || {
     path: path.resolve(__dirname, '../dist'),
     filename: `./js/[name].[hash${config.hashLength ? ':' + config.hashLength : ''}].js`,
-    // publicPath: '/public/'
   },
   resolve: {
     alias: {
