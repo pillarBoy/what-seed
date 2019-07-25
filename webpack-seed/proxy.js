@@ -1,7 +1,7 @@
 module.exports = {
   proxy: {
     "/proxy": {
-      target: "http://159.138.38.208:80",
+      target: "http://123.166.199.1:8080",
       // "target": "",
       // "secure": false,
       // "logLevel": "debug",
