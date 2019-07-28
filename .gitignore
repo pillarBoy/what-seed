@@ -5,3 +5,4 @@ logs
 .vscode
 
 webpack-seed/proxy.js
+*~
