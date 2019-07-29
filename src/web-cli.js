@@ -11,22 +11,17 @@ var ver = require('../package.json').version
 var copyExistingComments = require('./lib/copyExistingComments.js')
 var ask = require('./lib/askQuestions')
 var questions = require('./lib/questions')
-var _=require('lodash')
-var evaluate = require('./lib/evaluate.js')
+var _ = require('lodash')
 
-var marker = 0
-
-function createProject(opts) {
+function createProject(opts, projectName) {
   // 获取将要构建的项目根目录
-  var proPath = path.resolve(program.create);
+  var proPath = path.resolve(projectName);
 
   // mkdir 项目文件夹
   fs.ensureDirSync(path.basename(proPath));
 
   // 获取本地 种子项目 路径
   let proCWD = path.join(__dirname, '../webpack-seed');
-
-
 
   // 把模版文件复制到 新项目下
   vinyl.src(['**/*', '!node_modules/**/*'], { cwd: proCWD, dot: true })
@@ -35,8 +30,6 @@ function createProject(opts) {
       if (!file.stat.isFile()) {
         return callback();
       }
-
-      // console.log('this', file.contents.toString())
 
       file.contents = fileFilter(file, opts)
       this.push(file);
@@ -51,12 +44,12 @@ function createProject(opts) {
       // 加replace以便一致化
       const opt = opts.filter(item => item.name == '__notFile__butSettings__')[0].replace
 
-      if(opt.autoInstall){
+      if (opt.autoInstall) {
         var install = require('./install.js')
         install()
       }
       // 创建完成，提示
-      if( !opt.autoInstall){
+      if (!opt.autoInstall) {
         console.log(`
         项目创建已完成
 
@@ -71,7 +64,7 @@ function createProject(opts) {
             ${chalk.green('npm start')} 或 ${chalk.green('yarn start')} 
 
         ==============================================================
-        `) 
+        `)
       } else {
         console.log(`
         项目创建已完成
@@ -83,106 +76,75 @@ function createProject(opts) {
         ==============================================================
         `)
       }
-        ;
+      ;
     })
     .resume();
 }
 
 program
   .version(ver)
-  .command('-c --create [name]', 'create', 'create project')
   .command('create [name]', 'create', 'create project')
-  .on("option:create", function (cmd) {
-    console.log(chalk.green('项目正在开始创建....'));
-    configure() 
-  })
   .on("command:create", function (cmd) {
-    console.log(chalk.green('项目正在开始创建....'));
-    configure()
+    if (cmd) {
+      configure(cmd[0])
+    } else {
+      configure('new_project')
+    }
   })
   .parse(process.argv)
 
-function configure() {
+function configure(projectName) {
   // 问问题
-  let data = {isNotTest:true}
-  ask( questions.prompts, data , () => {
-      
-    /* 此处的函数目的是从questions中得到一个如下结构的数组，里面的对象name表示要变化的文件，replace表示要变化的条目
-    // 可能有 package.json, webpack.config.js, proxy.js, tsconfig.json
-    // callback was already called 错误见于此函数体下的语法错误
-    let opts =  [
-      {
-        name: 'package.json',
-        replace: {
-          name,
-          description,
-          author
-        }
-      },
-      {
-        name: 'config.js',
-        replace: {
-          isMobile,
-          i18n,
-          lint
-        }
-      },
-      {
-        name: '__notFile__butSettings__',
-        replace: {
-          autoInstall: data.autoInstall
-        }
-      }
-    ]
-    */
-    
-    const tempJson = _.invertBy( questions.prompts, value => value.inFile)
+  let data = { isNotTest: true }
+  ask(questions.prompts, data, () => {
+    const tempJson = _.invertBy(questions.prompts, value => value.inFile)
+
     const optArray = []
 
-    Object.keys(tempJson).forEach((key)=>{
-      let getDataValue = function(data){
+    Object.keys(tempJson).forEach((key) => {
+      let getDataValue = function (data) {
         let obj = {}
         tempJson[key].forEach(item => {
           obj[item] = data[item]
         })
         return obj
       }
-      optArray.push( {
+      optArray.push({
         name: key,
         replace: getDataValue(data),
       })
     })
-    // console.log(chalk.green('optArray'),optArray)
+    console.log(chalk.green('optArray'),optArray)
 
-    createProject(optArray)
+    createProject(optArray, projectName)
   })
 }
 
-function fileFilter(file, opts){
+function fileFilter(file, opts) {
   let converted = false
   let content
-  opts.map( item => {
-    if (file.basename === item.name){
-      switch(file.extname) {
-        case '.json': content = JSON.parse(file.contents.toString()) ; break;
+  opts.map(item => {
+    if (file.basename === item.name) {
+      switch (file.extname) {
+        case '.json': content = JSON.parse(file.contents.toString()); break;
         case '.js': content = require(file.path); break;
-        default: throw(`unknown file type ${file.basename}`)
+        default: throw (`unknown file type ${file.basename}`)
       }
-      for ( key in item.replace){
+      for (key in item.replace) {
         content[key] = item.replace[key]
-          converted = true
+        converted = true
       }
     }
   })
 
-  if (converted){
-    switch(file.extname) {
-        case '.json': return Buffer.from(JSON.stringify(content, null, 2)); break;
-        case '.js':
-          var templatePath  ='./config.template.js'
-          return Buffer.from( copyExistingComments( require(templatePath),fs.readFileSync(path.resolve(__dirname,templatePath), 'utf-8')) )
-          // return Buffer.from(`module.exports = {\n` + JSON.stringify( content ,null, 2).replace(/^/mg,'  ') + `\n}`);; break;
-        default: throw(`unknown file type ${file.basename}`)
+  if (converted) {
+    switch (file.extname) {
+      case '.json': return Buffer.from(JSON.stringify(content, null, 2)); break;
+      case '.js':
+        var templatePath = './config.template.js'
+        return Buffer.from(copyExistingComments(require(templatePath), fs.readFileSync(path.resolve(__dirname, templatePath), 'utf-8')))
+      // return Buffer.from(`module.exports = {\n` + JSON.stringify( content ,null, 2).replace(/^/mg,'  ') + `\n}`);; break;
+      default: throw (`unknown file type ${file.basename}`)
     }
 
   }

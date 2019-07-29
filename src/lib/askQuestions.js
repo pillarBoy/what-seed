@@ -1,31 +1,12 @@
-const exists = require('fs').existsSync
-const path = require('path')
 const inquirer = require('inquirer')
-const fs = require('fs')
 const async = require('async')
-const chalk = require('chalk')
 const evaluate = require('./evaluate.js')
-
-const questions = require('./questions')
-const webpackConfig = require('../config.template.js')
-
-const log = console.log 
-
-const destPath = path.resolve(__dirname, '../config.js')
-const configPath = path.resolve(__dirname, '../config.template.js')
-
-const webpackConfigContent = fs.readFileSync(configPath, 'utf-8')
-const configFileArray = webpackConfigContent.split(/\r?\n/)
-
 
 const promptMapping = {
   string: 'input',
   boolean: 'confirm'
 }
 
-// webpackConfig.isNotTest = true
-
-let data = webpackConfig
 module.exports = function ask(questions, data, done){
   async.eachSeries(Object.keys(questions), (key, next) => {
     prompt(data, key, questions[key], next)
@@ -67,26 +48,3 @@ function prompt (data, key, prompt, done) {
     done()
   }).catch('',done)
 }
-/*  function askQuestions(data) {
-    inquirer.prompt([{
-      type: 'confirm',
-      message: !exists(destPath)
-      ? 'Generate config in current directory?'
-      : 'warning! will rewrite current webpack/config.js. Continue?',
-      name: 'ok'
-    }]).then(answers => {
-      if (answers.ok) {
-        inquirer.prompt().then( answers => {
-          webpackConfig.isMobile = answers.isMobile
-            webpackConfig.eslint= answers.eslint
-              webpackConfig.i18n = answers.i18n
-                log(webpackConfig)
-                fs.writeFileSync(destPath, copyExistingComments(webpackConfig, configFileArray),'utf-8')
-        })
-      }
-
-    }).catch(
-      // logger.fatal
-      )
-  }
-*/
