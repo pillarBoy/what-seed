@@ -1,12 +1,12 @@
 {
-  "name": "webpack-seed",
+  "name": "",
   "version": "1.0.0",
   "sideEffects": false,
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "fuck-env NODE_ENV=dev webpack-dev-server --mode=development --inline --config webpack.config.js --progress --color",
-    "config":"node project.config.js",
+    "config": "node project.config.js",
     "start:zh": "fuck-env NODE_LANG=zh yarn start",
     "start:en": "fuck-env NODE_LANG=en yarn start",
     "build": "fuck-env NODE_ENV=prod webpack --config webpack.config.js --mode=production --progress --color",
@@ -57,5 +57,7 @@
   "browserslist": [
     "> .5%",
     "last 30 versions"
-  ]
+  ],
+  "description": "A front-end project",
+  "author": ""
 }

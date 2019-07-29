@@ -33,6 +33,8 @@ function findNpm() {
 }
  
 var npm = findNpm();
-runCmd(which.sync(npm), ['install'], function() {
-  console.log(npm + ' install end');
-})
+module.exports = function autoInstall() {
+  runCmd(which.sync(npm), ['install'], function() {
+    console.log(npm + ' install end');
+  })
+}
