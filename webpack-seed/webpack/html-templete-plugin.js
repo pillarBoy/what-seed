@@ -2,9 +2,9 @@ var htmlWebpackPlugin = require('html-webpack-plugin')
 var path = require('path')
 var config = require('./config')
 
-const template = path.resolve(__dirname, '../public/index.html')
+var template = path.resolve(__dirname, '../public/index.html')
 
-const lang = process.env.NODE_LANG || 'zh';
+var lang = process.env.NODE_LANG || 'zh';
 
 if (config.i18n || config.use_ejs) {
   template = path.resolve(__dirname, '../public/index.ejs') // './index.ejs', // 使用 ejs 文件是为了解决跟 html-loader 冲突
