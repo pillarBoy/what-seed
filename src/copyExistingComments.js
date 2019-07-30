@@ -3,8 +3,15 @@ const path = require('path')
 const fs = require('fs')
 
 const log = console.log
-// 遍历config 对于config.template.js中有注释的条目，为之加上注释
-module.exports = function copyExistingComments(srcConfig, srcFileContent){
+
+/* 遍历config 对于config.template.js中有注释的条目，为之加上注释
+ *  usage: copyExistingComments( path.resolve(__dirname, relativePath ) )
+ */
+
+module.exports = function copyExistingComments(absPath){
+  const srcConfig = require(absPath)
+  const srcFileContent = fs.readFileSync( absPath, 'utf-8' )
+
   const configFileArray = srcFileContent.split(/\r?\n/)
   const configFileContent = 'module.exports = ' + JSON.stringify(srcConfig, (key, value, srcArray) => appendComments(key, value, configFileArray) ,2)
 

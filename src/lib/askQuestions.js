@@ -12,7 +12,6 @@ module.exports = function ask(questions, data, done){
     prompt(data, key, questions[key], next)
   }, done)
 }
-// ask(questions.prompts, data)
 
 function prompt (data, key, prompt, done) {
   // skip prompts whose when condition is not met

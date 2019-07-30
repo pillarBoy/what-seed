@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "description": "",
+  "scripts":{
+    "test": "cd test && mocha test.js",
+    "coverage": "cd test && istanbul cover _mocha test.js"
+  },
   "bin": {
     "web-cli": "./src/web-cli.js"
   },
@@ -20,6 +24,9 @@
   },
   "devDependencies": {
     "async": "^3.1.0",
-    "lodash-es": "^4.17.15"
+    "chai": "^4.2.0",
+    "istanbul": "^0.4.5",
+    "lodash-es": "^4.17.15",
+    "mocha": "^6.2.0"
   }
 }

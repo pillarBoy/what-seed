@@ -7,11 +7,13 @@ var chalk = require('chalk');
 var vinyl = require('vinyl-fs');
 var through = require('through2');
 var ver = require('../package.json').version
+var inquirer = require('inquirer')
 
-var copyExistingComments = require('./lib/copyExistingComments.js')
+var copyExistingComments = require('./copyExistingComments.js')
 var ask = require('./lib/askQuestions')
-var questions = require('./lib/questions')
+var questions = require('./questions')
 var _ = require('lodash')
+var getGitUser = require('./lib/git-user.js')
 
 function createProject(opts, projectName) {
   // 获取将要构建的项目根目录
@@ -41,11 +43,12 @@ function createProject(opts, projectName) {
     .on('end', function () {
       // 将node工作目录更改成构建的项目根目录下
       process.chdir(proPath);
+
       // 加replace以便一致化
       const opt = opts.filter(item => item.name == '__notFile__butSettings__')[0].replace
 
       if (opt.autoInstall) {
-        var install = require('./install.js')
+        var install = require('./lib/install.js')
         install()
       }
       // 创建完成，提示
@@ -54,8 +57,8 @@ function createProject(opts, projectName) {
         项目创建已完成
 
         =============================================================== 
-          请进入到 你到项目文件夹 ./${chalk.green(program.create)} 
-            ${chalk.green('cd ./' + program.create)} 
+          请进入到 你到项目文件夹 ./${chalk.green(projectName)} 
+            ${chalk.green('cd ./' + projectName)} 
 
           然后执行install 
             ${chalk.green('npm install')} 或 ${chalk.green('yarn')} 
@@ -69,8 +72,8 @@ function createProject(opts, projectName) {
         console.log(`
         项目创建已完成
         ===============================================================
-          请进入到 你到项目文件夹 ./${chalk.green(program.create)}
-            ${chalk.green('cd ./' + program.create)}
+          请进入到 你到项目文件夹 ./${chalk.green(projectName)}
+            ${chalk.green('cd ./' + projectName)}
 
           开始开发
         ==============================================================
@@ -85,22 +88,46 @@ program
   .version(ver)
   .command('create [name]', 'create', 'create project')
   .on("command:create", function (cmd) {
+    let projectName = 'myproject'
     if (cmd) {
-      configure(cmd[0])
+      if(!cmd[0])     console.log(chalk.yellow('path not given, using default path \'myproject\''))
+      questions.prompts.name.default = cmd[0] || projectName
+      checkExist(cmd[0] || projectName)
     } else {
-      configure('new_project')
+      questions.prompts.name.default = cmd[0]  || projectName
+      checkExist(projectName)
     }
   })
   .parse(process.argv)
 
-function configure(projectName) {
-  // 问问题
+// 查看当前文件中是否存在和要创建的项目同名的文件夹, from vue-init
+function checkExist(projectName) {
+  const to = path.resolve(projectName || '.')
+  const inPlace = !projectName || projectName === '.'
+  if (fs.existsSync(to)) {
+    inquirer.prompt([{
+      type: 'confirm',
+      message: inPlace
+      ? 'Generate project in current directory?'
+      : 'Target directory exists. Continue?',
+      name: 'ok'
+    }]).then(answers => {
+      if (answers.ok) {
+        promptForMeta(projectName)
+      }
+    }).catch(e => console.log(e))
+  } else {
+    promptForMeta(projectName)
+  }
+}
+
+// 问'./questions'中定义的问题, 并将问题转化为fileFilter可接受的对象
+function promptForMeta(projectName) {
   let data = { isNotTest: true }
+  questions.prompts.author.default = getGitUser()
   ask(questions.prompts, data, () => {
     const tempJson = _.invertBy(questions.prompts, value => value.inFile)
-
     const optArray = []
-
     Object.keys(tempJson).forEach((key) => {
       let getDataValue = function (data) {
         let obj = {}
@@ -114,13 +141,25 @@ function configure(projectName) {
         replace: getDataValue(data),
       })
     })
-    console.log(chalk.green('optArray'),optArray)
+    // console.log(chalk.green('optArray'),optArray)
 
     createProject(optArray, projectName)
   })
 }
 
-function fileFilter(file, opts) {
+/* file:vinyl的file对象, 
+ * opts: 一个由
+ * {
+   * name:'config.js',
+   * replace:{
+     * key:value,
+     * key2:value2,
+     * }
+   * }
+ * }
+ * 构成的对象数组
+ */
+function fileFilter( file, opts ) {
   let converted = false
   let content
   opts.map(item => {
@@ -142,11 +181,10 @@ function fileFilter(file, opts) {
       case '.json': return Buffer.from(JSON.stringify(content, null, 2)); break;
       case '.js':
         var templatePath = './config.template.js'
-        return Buffer.from(copyExistingComments(require(templatePath), fs.readFileSync(path.resolve(__dirname, templatePath), 'utf-8')))
+        return Buffer.from(copyExistingComments(path.resolve(__dirname,templatePath)))
       // return Buffer.from(`module.exports = {\n` + JSON.stringify( content ,null, 2).replace(/^/mg,'  ') + `\n}`);; break;
       default: throw (`unknown file type ${file.basename}`)
     }
-
   }
   else {
     return file.contents
