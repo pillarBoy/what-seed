@@ -181,7 +181,7 @@ function fileFilter( file, opts ) {
       case '.json': return Buffer.from(JSON.stringify(content, null, 2)); break;
       case '.js':
         var templatePath = './config.template.js'
-        return Buffer.from(copyExistingComments(path.resolve(__dirname,templatePath)))
+        return Buffer.from(copyExistingComments(content, path.resolve(__dirname,templatePath)))
       // return Buffer.from(`module.exports = {\n` + JSON.stringify( content ,null, 2).replace(/^/mg,'  ') + `\n}`);; break;
       default: throw (`unknown file type ${file.basename}`)
     }

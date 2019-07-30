@@ -55,7 +55,7 @@ describe('web-cli', () => {
     let fromPath ='./mock-copy-js/from.js'
     let toPath ='./mock-copy-js/to.js'
     
-    const config = copyExistingComments(path.resolve(__dirname,fromPath))
+    const config = copyExistingComments(require(fromPath),path.resolve(__dirname,fromPath))
     expect(config).to.equal(fs.readFileSync(toPath, 'utf-8'))
     
   })
