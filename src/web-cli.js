@@ -2,10 +2,10 @@
 
 var path = require('path')
 var program = require('commander')
-var fs = require('fs-extra');
-var chalk = require('chalk');
-var vinyl = require('vinyl-fs');
-var through = require('through2');
+var fs = require('fs-extra')
+var chalk = require('chalk')
+var vinyl = require('vinyl-fs')
+var through = require('through2')
 var ver = require('../package.json').version
 var inquirer = require('inquirer')
 
@@ -17,32 +17,32 @@ var getGitUser = require('./lib/git-user.js')
 
 function createProject(opts, projectName) {
   // 获取将要构建的项目根目录
-  var proPath = path.resolve(projectName);
+  var proPath = path.resolve(projectName)
 
   // mkdir 项目文件夹
-  fs.ensureDirSync(path.basename(proPath));
+  fs.ensureDirSync(path.basename(proPath))
 
   // 获取本地 种子项目 路径
-  let proCWD = path.join(__dirname, '../webpack-seed');
+  let proCWD = path.join(__dirname, '../webpack-seed')
 
   // 把模版文件复制到 新项目下
   vinyl.src(['**/*', '!node_modules/**/*'], { cwd: proCWD, dot: true })
     .pipe(through.obj(function (file, enc, callback) {
 
       if (!file.stat.isFile()) {
-        return callback();
+        return callback()
       }
 
       file.contents = fileFilter(file, opts)
-      this.push(file);
-      return callback();
+      this.push(file)
+      return callback()
     })
     )
     // 将从模版项目 下读取的文件流写入到 新项目文件夹中
     .pipe(vinyl.dest(proPath))
     .on('end', function () {
       // 将node工作目录更改成构建的项目根目录下
-      process.chdir(proPath);
+      process.chdir(proPath)
 
       // 加replace以便一致化
       const opt = opts.filter(item => item.name == '__notFile__butSettings__')[0].replace
@@ -79,9 +79,8 @@ function createProject(opts, projectName) {
         ==============================================================
         `)
       }
-      ;
     })
-    .resume();
+    .resume()
 }
 
 program
@@ -165,9 +164,16 @@ function fileFilter( file, opts ) {
   opts.map(item => {
     if (file.basename === item.name) {
       switch (file.extname) {
-        case '.json': content = JSON.parse(file.contents.toString()); break;
-        case '.js': content = require(file.path); break;
-        default: throw (`unknown file type ${file.basename}`)
+        case '.json': {
+          content = JSON.parse(file.contents.toString())
+          break
+        }
+        case '.js': {
+          content = require(file.path)
+          break
+        } 
+        default: 
+          throw (`unknown file type ${file.basename}`)
       }
       for (key in item.replace) {
         content[key] = item.replace[key]
@@ -189,5 +195,4 @@ function fileFilter( file, opts ) {
   else {
     return file.contents
   }
-
 }

@@ -1,6 +1,5 @@
 /* 这个文件的变动，需要写明inFile, 即配置所在文件，否则web-cli.js 下将报错
  * 不是要写入文件的配置，应设定为       inFile: '__notFile__butSettings__',
-
  */
 module.exports ={
   prompts: {
