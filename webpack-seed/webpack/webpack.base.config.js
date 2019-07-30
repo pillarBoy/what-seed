@@ -73,7 +73,7 @@ const webpackBase = {
       {
         test: /\.m?jsx?$/,
         exclude: /(node_modules|bower_components)/,
-        use: { loader: 'babel-loader', options: { presets: ['@babel/preset-env'] } }
+        use: { loader: 'babel-loader' }
       },
       // typescript
       { test: /\.tsx?$/, loader: "ts-loader" }
