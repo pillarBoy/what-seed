@@ -6,7 +6,7 @@ A front end project seed for whatever
 
 这是一个前端webpack种子项目，可以用来生成前端的起始项目。通过问答完成移动端适配、sass编译等环境配置，类似vue-init.
 
-详见[已实现功能](https://github.com/pillarBoy/what-seed)
+详见[已实现功能](https://github.com/pillarBoy/what-seed/blob/master/%E5%B7%B2%E5%AE%9E%E7%8E%B0%E5%8A%9F%E8%83%BD%E5%88%97%E8%A1%A8.md)
 
 ## Usage
 
