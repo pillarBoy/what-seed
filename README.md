@@ -1,4 +1,6 @@
-# what-seed  a front end project seed for whatever 
+# what-seed 
+
+A front end project seed for whatever 
 
 ## Functionality
 
