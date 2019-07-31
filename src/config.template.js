@@ -1,3 +1,5 @@
+/* 这个文件将会复制到生成项目的webpack/config.js下, 通过问答配置的不同更改一些默认配置
+ **/
 module.exports = {
   entry: {
     index: './src/index.js'
