@@ -1,8 +1,6 @@
-import "./assets/index.scss";
-import aa from './index.ts'
-import { log } from '%/devUtils.js'
+import "./assets/index.css";
+import a from './a.ts'
 
-console.log(aa);
-log()
+console.log(a);
 
 console.log('bitkan webpack pc seed');
