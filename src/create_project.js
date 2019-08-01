@@ -3,6 +3,7 @@ var path = require('path')
 var vinyl = require('vinyl-fs')
 var chalk = require('chalk')
 var through = require('through2')
+const copyExistingComments = require('./copyExistingComments.js')
 
 module.exports = function createProject(projectName, opts, seedPath) {
   // 获取将要构建的项目根目录
@@ -11,6 +12,7 @@ module.exports = function createProject(projectName, opts, seedPath) {
   // mkdir 项目文件夹
   fs.ensureDirSync(path.basename(proPath))
 
+  console.log('ader')
   // 把模版文件复制到 新项目下
   vinyl.src(['**/*', '!node_modules/**/*'], { cwd: seedPath, dot: true })
     .pipe(through.obj(function (file, enc, callback) {
