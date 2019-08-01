@@ -13,8 +13,6 @@ if (config.isMobile) {
     config.entry = Object.assign({ setRem: path.resolve(__dirname, '../src/utils/htmlFontSize.js') }, config.entry);
   }
 }
-console.log(process.env.NODE_ENV);
-
 
 const webpackBase = {
   entry: config.entry || './src/index.js',

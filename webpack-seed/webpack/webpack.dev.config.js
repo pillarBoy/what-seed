@@ -1,10 +1,22 @@
 var path = require('path')
+var fs = require('fs')
 var webpack = require('webpack')
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
 var htmlTemplate = require('./html-templete-plugin')
 var config = require('./config')
 
-var { proxy } = require('../proxy')
+var proxy = null;
+
+try {
+  if (fs.statSync(path.resolve(__dirname, '../proxy.js'))) {
+    proxy = require('../proxy').proxy
+  }
+} catch (error) {
+  console.log('没有proxy module');
+  
+  proxy = {}
+}
+
 
 module.exports = {
   mode: 'development',
@@ -29,7 +41,7 @@ module.exports = {
       errors: true
     },
     open: config.open,
-    host: '0.0.0.0',
+    host: 'localhost',
     port: 5001, // open: 'Google Chrome',
     proxy,
   }
