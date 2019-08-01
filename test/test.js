@@ -14,7 +14,7 @@ const copyExistingComments = require('../src/copyExistingComments.js')
 
 const promptForMeta = require('../src/promptForMeta.js')
 const questions = require('../src/questions.js')
-const startCreate = require('../src/web-cli.js')
+const startCreate = require('../src/wpbase-cli.js')
 
 const log = console.log
 
@@ -34,9 +34,9 @@ function monkeyPatchInquirer (answers) {
   }
 }
 
-describe('web-cli', () => {
+describe('wpbase-cli', () => {
   const escapedAnswers = {
-    name: 'web-cli-test',
+    name: 'wpbase-cli-test',
     author: 'John "The Tester" Doe <john@doe.com>',
     description: 'vue-cli e2e test',
     preprocessor: {
@@ -76,7 +76,7 @@ describe('web-cli', () => {
     }
   })
 
-  it('prompt stuff correctly ', async () => {
+  it('prompt stuff correctly add to target file', async () => {
     monkeyPatchInquirer( answers )
     const meta = await promptForMeta('oooj', questions )
     expect(meta).to.be.an('Object')
