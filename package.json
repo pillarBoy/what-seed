@@ -1,5 +1,5 @@
 {
-  "name": "web-cli",
+  "name": "wpbase-cli",
   "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
@@ -9,7 +9,7 @@
     "coverage": "cd test && istanbul cover _mocha test.js"
   },
   "bin": {
-    "web-cli": "./src/web-cli.js"
+    "wpbase-cli": "./src/web-cli.js"
   },
   "author": "大柱子 白天雪",
   "dependencies": {

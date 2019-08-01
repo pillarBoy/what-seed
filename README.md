@@ -11,7 +11,7 @@ A front end project seed for whatever
 ## Usage
 
 ``` bash
-$ web-cli create <project-name>
+$ wpbase-cli create <project-name>
 ```
 
 ## Installation
@@ -21,10 +21,10 @@ $ web-cli create <project-name>
 ``` bash
 $ git clone https://github.com/pillarBoy/what-seed
 $ cd what-seed
-$ npm link  # make web-cli a global command, might have accession issues.
+$ npm link  # make wpbase-cli a global command, might have accession issues.
             # alternatively, set path-to-webcli-dir as env variable
 
-$ web-cli create myproject  
+$ wpbase-cli create myproject  
 $ cd myproject
 ```
 
