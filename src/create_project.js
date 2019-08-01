@@ -12,7 +12,6 @@ module.exports = function createProject(projectName, opts, seedPath) {
   // mkdir 项目文件夹
   fs.ensureDirSync(path.basename(proPath))
 
-  console.log('ader')
   // 把模版文件复制到 新项目下
   vinyl.src(['**/*', '!node_modules/**/*'], { cwd: seedPath, dot: true })
     .pipe(through.obj(function (file, enc, callback) {
