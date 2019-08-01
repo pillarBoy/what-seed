@@ -36,7 +36,9 @@ start to work
 
 问答可以定制一些不同场景下的不同配置，在 `src/questions.js` 中可以定制问答项目。
 
-引入单元测试，编写测试文件 `test/test.js` 后 `npm run test` 运行测试，`npm run coverage` 运行istanbul覆盖率测试
+引入单元测试，编写测试文件 `test/test.js` 后 `npm test` 运行测试，`npm run coverage` 运行istanbul覆盖率测试
+
+istanbul 依赖的 esprima 暂不支持async，因此控制台会有一些无关的报错
 
 ## Details
 
@@ -50,6 +52,8 @@ start to work
 
 详见[px2rem文档](https://github.com/songsiqi/px2rem)
 
+## 支持版本
+async await 需要node > 7.6支持
 
 ## 项目包管理，使用yarn
 

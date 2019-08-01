@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">94.12% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>15/24</span>
+        <span class='fraction'>32/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">50% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/2</span>
+        <span class='fraction'>1/2</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">0% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>0/1</span>
+        <span class='fraction'>1/1</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">62.5% </span>
+        <span class="strong">94.12% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>15/24</span>
+        <span class='fraction'>32/34</span>
       </div>
     </div>
   </div>
-  <div class='status-line medium'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -127,7 +127,17 @@
 82
 83
 84
-85</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -137,20 +147,28 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">14×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -174,12 +192,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
@@ -187,6 +199,14 @@
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -221,20 +241,28 @@ const path = require('path')
 // const generate = require('../../lib/generate')
 // const metadata = require('../../lib/options')
 // const { isLocalPath, getTemplatePath } = require('../../lib/local-path')
+&nbsp;
+// target test
 const copyExistingComments = require('../src/copyExistingComments.js')
 &nbsp;
-<span class="fstat-no" title="function not covered" >function monkeyPatchInquirer (answers) {</span>
+const promptForMeta = require('../src/promptForMeta.js')
+const questions = require('../src/questions.js')
+&nbsp;
+const log = console.log
+&nbsp;
+&nbsp;
+function monkeyPatchInquirer (answers) {
   // monkey patch inquirer
-<span class="cstat-no" title="statement not covered" >  inquirer.prompt = questions =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >    const key = questions[0].name</span>
-<span class="cstat-no" title="statement not covered" >    const _answers = {}</span>
-<span class="cstat-no" title="statement not covered" >    const validate = questions[0].validate</span>
-<span class="cstat-no" title="statement not covered" >    const valid = validate(answers[key])</span>
-<span class="cstat-no" title="statement not covered" >    if (valid !== true) {</span>
+  inquirer.prompt = questions =&gt; {
+    const key = questions[0].name
+    const _answers = {}
+    const validate = questions[0].validate
+    const valid = validate(answers[key])
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (valid !== true) {
 <span class="cstat-no" title="statement not covered" >      return Promise.reject(new Error(valid))</span>
     }
-<span class="cstat-no" title="statement not covered" >    _answers[key] = answers[key]</span>
-<span class="cstat-no" title="statement not covered" >    return Promise.resolve(_answers)</span>
+    _answers[key] = answers[key]
+    return Promise.resolve(_answers)
   }
 }
 &nbsp;
@@ -256,21 +284,23 @@ describe('web-cli', () =&gt; {
     name: 'vue-cli-test',
     author: 'John Doe &lt;john@doe.com&gt;',
     description: 'vue-cli e2e test',
-    preprocessor: {
-      less: true,
-      sass: true
-    },
-    pick: 'no',
-    noEscape: true
   }
 &nbsp;
   it('copy existing config with comment to target file', () =&gt; {
     let fromPath ='./mock-copy-js/from.js'
     let toPath ='./mock-copy-js/to.js'
     
-    const config = copyExistingComments(path.resolve(__dirname,fromPath))
+    const config = copyExistingComments(require(fromPath),path.resolve(__dirname,fromPath))
     expect(config).to.equal(fs.readFileSync(toPath, 'utf-8'))
-    
+  })
+&nbsp;
+  it('prompt questions and get object', () =&gt; {
+    monkeyPatchInquirer( answers )
+    console.log( promptForMeta('oooj', questions ), '--------')
+    const meta = promptForMeta('oooj', questions )
+    console.log('meta',meta,typeof meta)
+    expect(meta).to.be.an('object')
+<span class="cstat-no" title="statement not covered" >    expect(meta.prompts).to.have.property('description')</span>
   })
 //  it('read metadata from json', () =&gt; {
 //    const meta = metadata('test-pkg', MOCK_TEMPLATE_REPO_PATH)
@@ -301,7 +331,7 @@ describe('web-cli', () =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Jul 30 2019 17:33:51 GMT+0800 (CST)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Aug 01 2019 14:07:03 GMT+0800 (CST)
 </div>
 </div>
 <script src="../prettify.js"></script>

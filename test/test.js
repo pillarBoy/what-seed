@@ -8,7 +8,16 @@ const path = require('path')
 // const generate = require('../../lib/generate')
 // const metadata = require('../../lib/options')
 // const { isLocalPath, getTemplatePath } = require('../../lib/local-path')
+
+// target test
 const copyExistingComments = require('../src/copyExistingComments.js')
+
+const promptForMeta = require('../src/promptForMeta.js')
+const questions = require('../src/questions.js')
+const startCreate = require('../src/web-cli.js')
+
+const log = console.log
+
 
 function monkeyPatchInquirer (answers) {
   // monkey patch inquirer
@@ -43,12 +52,6 @@ describe('web-cli', () => {
     name: 'vue-cli-test',
     author: 'John Doe <john@doe.com>',
     description: 'vue-cli e2e test',
-    preprocessor: {
-      less: true,
-      sass: true
-    },
-    pick: 'no',
-    noEscape: true
   }
 
   it('copy existing config with comment to target file', () => {
@@ -57,28 +60,34 @@ describe('web-cli', () => {
     
     const config = copyExistingComments(require(fromPath),path.resolve(__dirname,fromPath))
     expect(config).to.equal(fs.readFileSync(toPath, 'utf-8'))
-    
   })
-//  it('read metadata from json', () => {
-//    const meta = metadata('test-pkg', MOCK_TEMPLATE_REPO_PATH)
-//    expect(meta).to.be.an('object')
-//    expect(meta.prompts).to.have.property('description')
-//  })
-//
-//  it('read metadata from js', () => {
-//    const meta = metadata('test-pkg', MOCK_METADATA_REPO_JS_PATH)
-//    expect(meta).to.be.an('object')
-//    expect(meta.prompts).to.have.property('description')
-//  })
-//
-//  it('helpers', done => {
-//    monkeyPatchInquirer(answers)
-//    generate('test', MOCK_METADATA_REPO_JS_PATH, MOCK_TEMPLATE_BUILD_PATH, err => {
-//      if (err) done(err)
-//      const contents = fs.readFileSync(`${MOCK_TEMPLATE_BUILD_PATH}/readme.md`, 'utf-8')
-//      expect(contents).to.equal(answers.name.toUpperCase())
-//      done()
-//    })
-//  })
+
+  it('prompt questions and get correct options array',async () => {
+    monkeyPatchInquirer( answers )
+    const meta = await promptForMeta('oooj', questions )
+    expect(meta).to.be.an('Object')
+    if (meta.length > 0 ) {
+      let packageJson = meta['package.json']
+      let configJs = meta['config.js']
+      let settings = meta['__notFile__butSettings__']
+      packageJson && expect(packageJson).to.have.property('description')
+      configJs && expect(configJs).to.have.property('isMobile')
+      settings && expect(settings).to.have.property('autoInstall')
+    }
+  })
+
+  it('prompt stuff correctly ', async () => {
+    monkeyPatchInquirer( answers )
+    const meta = await promptForMeta('oooj', questions )
+    expect(meta).to.be.an('Object')
+    if (meta.length > 0 ) {
+      let packageJson = meta['package.json']
+      let configJs = meta['config.js']
+      let settings = meta['__notFile__butSettings__']
+      packageJson && expect(packageJson).to.have.property('description')
+      configJs && expect(configJs).to.have.property('isMobile')
+      settings && expect(settings).to.have.property('autoInstall')
+    }
+  })
 
 })
