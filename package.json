@@ -9,7 +9,7 @@
     "coverage": "cd test && istanbul cover _mocha test.js"
   },
   "bin": {
-    "wpbase-cli": "./src/web-cli.js"
+    "wpbase-cli": "./src/wpbase-cli.js"
   },
   "author": "大柱子 白天雪",
   "dependencies": {
