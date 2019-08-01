@@ -14,10 +14,6 @@ var promptForMeta = require('./promptForMeta')
 var createProject = require('./create_project')
 
 
-// 获取本地 种子项目 路径
-const seedPath = path.join(__dirname, '../webpack-seed')
-
-
 program
   .version(ver)
   .command('create [name]', 'create', 'create project')
@@ -29,6 +25,10 @@ program
     if(!cmd[0]) {
       console.log(chalk.yellow('path not given, using default path \'myproject\''))
      }
+
+    // 获取本地 种子项目 路径
+    const seedPath = path.join(__dirname, '../webpack-seed')
+
     startCreate(projectName, questions, seedPath)
 
   })
@@ -38,7 +38,7 @@ async function startCreate (projectName, questions, seedPath) {
   let ok = await checkExist(projectName)
   if (!!ok) {
     let opts = await promptForMeta(projectName, questions)
-      console.log(seedPath)
+      // console.log(seedPath)
     createProject(projectName, opts, seedPath)
   }
 }
