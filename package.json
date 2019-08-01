@@ -1,9 +1,14 @@
 {
   "name": "wpbase-cli",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "main": "index.js",
   "license": "MIT",
   "description": "",
+  "homepage": "https://github.com/pillarBoy/what-seed",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pillarBoy/what-seed.git"
+  },
   "scripts": {
     "test": "cd test && mocha test.js",
     "coverage": "cd test && istanbul cover _mocha test.js"
