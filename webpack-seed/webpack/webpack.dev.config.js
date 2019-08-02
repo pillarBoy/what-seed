@@ -2,28 +2,26 @@ var path = require('path')
 var fs = require('fs')
 var webpack = require('webpack')
 var FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+var portfinder = require('portfinder')
 var htmlTemplate = require('./html-templete-plugin')
 var config = require('./config')
 
 var proxy = null;
-
+// 判断是否有proxy
 try {
   if (fs.statSync(path.resolve(__dirname, '../proxy.js'))) {
     proxy = require('../proxy').proxy
   }
 } catch (error) {
   console.log('没有proxy module');
-  
   proxy = {}
 }
-
 
 module.exports = {
   mode: 'development',
   output: {
     publicPath: ''
   },
-
   plugins: [
     htmlTemplate.dev,
     new webpack.NamedModulesPlugin(),
