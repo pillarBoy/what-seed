@@ -1,4 +1,5 @@
 var path = require('path')
+var MiniCssExtractPlugin = require("mini-css-extract-plugin")
 var config = require('./config')
 
 if (config.isMobile) {
@@ -28,6 +29,25 @@ const webpackBase = {
   },
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: [
+          process.env.NODE_ENV === 'dev' ? { loader: "style-loader" }: MiniCssExtractPlugin.loader, // 将 JS 字符串生成为 style 节点)
+          { loader: "css-loader", }, // 将 CSS 转化成 CommonJS 模块
+          { loader: 'px2rem-loader' , options: { remUni: 75, remPrecision: 8 } }, // px to rem
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+        ]
+      },
+      {
+        test: /\.s(a|c)ss$/,
+        use: [
+          { loader: "style-loader" }, // 将 JS 字符串生成为 style 节点)
+          { loader: "css-loader", }, // 将 CSS 转化成 CommonJS 模块
+          { loader: 'px2rem-loader' , options: { remUni: 75, remPrecision: 8 } }, // px to rem
+          { loader: 'postcss-loader', options: { sourceMap: true } },
+          { loader: "sass-loader" }, // 将 Sass 编译成 CSS
+        ]
+      },
       // file
       {
         test: /\.(png|jpg|gif|ttf|woff2?|eot|svg)$/,
