@@ -68,10 +68,9 @@ module.exports = function createProject(projectName, opts, seedPath) {
         ==============================================================
         `)
       }
+    resolve(true)
     })
     .resume()
-
-    resolve(true)
   })
 
 }

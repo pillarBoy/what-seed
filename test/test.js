@@ -21,6 +21,8 @@ const log = console.log
 
 const PROJECT_NAME = 'oooj'
 const MOCK_TEMPLATE_BUILD_PATH = path.resolve(PROJECT_NAME)
+const MOCK_TEMPLATE_PATH = path.resolve('./mock-create-from-template/')
+
 
 function monkeyPatchInquirer (answers) {
   // monkey patch inquirer
@@ -80,10 +82,10 @@ describe('wpbase-cli', () => {
     }
   })
 
-  it('prompt stuff correctly add to target file', async () => {
+  it('prompt stuff correctly add to target file: package.json and config.js', async () => {
     monkeyPatchInquirer( answers )
     console.log('creating mock project for test')
-    await startCreate(PROJECT_NAME, questions, '../webpack-seed/')
+    await startCreate(PROJECT_NAME, questions, MOCK_TEMPLATE_PATH)
     console.log('created, start testing')
 
     expect(fs.existsSync(`${MOCK_TEMPLATE_BUILD_PATH}/webpack/config.js`)).to.equal(true)
