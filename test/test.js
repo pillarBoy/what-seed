@@ -16,19 +16,19 @@ const promptForMeta = require('../src/promptForMeta.js')
 const questions = require('../src/questions.js')
 const startCreate = require('../src/wpbase-cli.js')
 
+var chalk = require('chalk')
 const log = console.log
-
 
 function monkeyPatchInquirer (answers) {
   // monkey patch inquirer
   inquirer.prompt = questions => {
     const key = questions[0].name
     const _answers = {}
-    const validate = questions[0].validate
-    const valid = validate(answers[key])
-    if (valid !== true) {
-      return Promise.reject(new Error(valid))
-    }
+   //  const validate = questions[0].validate
+   //  const valid = validate(answers[key])
+   //  if (valid !== true) {
+   //    return Promise.reject(new Error(valid))
+   //  }
     _answers[key] = answers[key]
     return Promise.resolve(_answers)
   }
@@ -78,7 +78,9 @@ describe('wpbase-cli', () => {
 
   it('prompt stuff correctly add to target file', async () => {
     monkeyPatchInquirer( answers )
-    const meta = await promptForMeta('oooj', questions )
+    console.log(typeof(startCreate))
+    await startCreate('oooj', questions, '../webpack-seed/')
+
     expect(meta).to.be.an('Object')
     if (meta.length > 0 ) {
       let packageJson = meta['package.json']

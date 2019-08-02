@@ -5,6 +5,5 @@ logs
 
 .vscode
 
-webpack-seed/proxy.js
 /test/coverage/
 

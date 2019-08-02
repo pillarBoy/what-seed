@@ -70,4 +70,8 @@ function checkExist(projectName) {
 }
 
 // for test
-module.export = startCreate
+module.exports = startCreate
+
+//   function start (projectName,questions,seedPath){
+//   startCreate(projectName, questions, seedPath)
+// }
