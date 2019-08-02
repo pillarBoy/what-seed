@@ -19,6 +19,9 @@ const startCreate = require('../src/wpbase-cli.js')
 var chalk = require('chalk')
 const log = console.log
 
+const PROJECT_NAME = 'oooj'
+const MOCK_TEMPLATE_BUILD_PATH = path.resolve(PROJECT_NAME)
+
 function monkeyPatchInquirer (answers) {
   // monkey patch inquirer
   inquirer.prompt = questions => {
@@ -52,6 +55,7 @@ describe('wpbase-cli', () => {
     name: 'vue-cli-test',
     author: 'John Doe <john@doe.com>',
     description: 'vue-cli e2e test',
+    i18n: true,
   }
 
   it('copy existing config with comment to target file', () => {
@@ -78,18 +82,37 @@ describe('wpbase-cli', () => {
 
   it('prompt stuff correctly add to target file', async () => {
     monkeyPatchInquirer( answers )
-    console.log(typeof(startCreate))
-    await startCreate('oooj', questions, '../webpack-seed/')
+    console.log('creating mock project for test')
+    await startCreate(PROJECT_NAME, questions, '../webpack-seed/')
+    console.log('created, start testing')
 
-    expect(meta).to.be.an('Object')
-    if (meta.length > 0 ) {
-      let packageJson = meta['package.json']
-      let configJs = meta['config.js']
-      let settings = meta['__notFile__butSettings__']
-      packageJson && expect(packageJson).to.have.property('description')
-      configJs && expect(configJs).to.have.property('isMobile')
-      settings && expect(settings).to.have.property('autoInstall')
-    }
+    expect(fs.existsSync(`${MOCK_TEMPLATE_BUILD_PATH}/webpack/config.js`)).to.equal(true)
+    let config = require(`${MOCK_TEMPLATE_BUILD_PATH}/webpack/config.js`)
+    expect( config.i18n ).to.equal( answers.i18n )
+
+    expect(fs.existsSync(`${MOCK_TEMPLATE_BUILD_PATH}/package.json`)).to.equal(true)
+    let packageJson = require(`${MOCK_TEMPLATE_BUILD_PATH}/package.json`)
+    expect( packageJson.name ).to.equal( answers.name )
+    console.log('test finished. deleting mock project')
+
+    deleteall(`${MOCK_TEMPLATE_BUILD_PATH}`)
+
   })
 
 })
+
+function deleteall(path) {
+	var files = [];
+	if(fs.existsSync(path)) {
+		files = fs.readdirSync(path);
+		files.forEach(function(file, index) {
+			var curPath = path + "/" + file;
+			if(fs.statSync(curPath).isDirectory()) { // recurse
+				deleteall(curPath);
+			} else { // delete file
+				fs.unlinkSync(curPath);
+			}
+		});
+		fs.rmdirSync(path);
+	}
+};
