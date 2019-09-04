@@ -35,12 +35,10 @@ program
   .parse(process.argv)
 
 async function startCreate (projectName, questions, seedPath) {
-  let ok = await checkExist(projectName)
-  if (!!ok) {
-    let opts = await promptForMeta(projectName, questions)
-      // console.log(seedPath)
-    createProject(projectName, opts, seedPath)
-  }
+    let ok = await checkExist(projectName)
+      let opts = await promptForMeta(projectName, questions)
+        // console.log(seedPath)
+      await createProject(projectName, opts, seedPath)
 }
 
 // 查看当前文件中是否存在和要创建的项目同名的文件夹, from vue-init
@@ -70,4 +68,8 @@ function checkExist(projectName) {
 }
 
 // for test
-module.export = startCreate
+module.exports = startCreate
+
+//   function start (projectName,questions,seedPath){
+//   startCreate(projectName, questions, seedPath)
+// }

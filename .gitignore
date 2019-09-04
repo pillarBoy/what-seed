@@ -6,6 +6,5 @@ dist
 
 .vscode
 
-webpack-seed/proxy.js
 /test/coverage/
 

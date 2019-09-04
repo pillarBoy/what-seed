@@ -6,12 +6,14 @@ var through = require('through2')
 const copyExistingComments = require('./copyExistingComments.js')
 
 module.exports = function createProject(projectName, opts, seedPath) {
+  return new Promise( (resolve,reject) =>{
   // 获取将要构建的项目根目录
   var proPath = path.resolve(projectName)
 
   // mkdir 项目文件夹
   fs.ensureDirSync(path.basename(proPath))
 
+  if(!seedPath) console.warn(`seedPath not defined, copying current path`)
   // 把模版文件复制到 新项目下
   vinyl.src(['**/*', '!node_modules/**/*'], { cwd: seedPath, dot: true })
     .pipe(through.obj(function (file, enc, callback) {
@@ -66,8 +68,11 @@ module.exports = function createProject(projectName, opts, seedPath) {
         ==============================================================
         `)
       }
+    resolve(true)
     })
     .resume()
+  })
+
 }
 
 
