@@ -50,7 +50,7 @@ const webpackBase = {
       },
       // file
       {
-        test: /\.(png|jpg|gif|ttf|woff2?|eot|svg)$/,
+        test: /\.(png|jpg|gif|svg)$/,
         use: [
           {
             loader: 'file-loader',
@@ -64,7 +64,7 @@ const webpackBase = {
       },
       // font
       {
-        test: /\.(ttf|woff2?|eot|svg)$/,
+        test: /\.(ttf|woff2?|eot)$/,
         use: [{ loader: 'file-loader', options: { outputPath: 'font', filename: `[path][name].[hash${config.hashLength ? ':' + config.hashLength : ''}].[ext]` } }]
       },
 
